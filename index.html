@@ -453,6 +453,7 @@ body.is-admin .admin-only-flex{display:flex}
           </div>
           <input type="file" id="photo-input-temps" accept="image/*" capture="environment" style="display:none" onchange="handlePhoto(this,'temps')">
         </div>
+        <button class="btn btn-blue" id="save-temps-btn" onclick="saveTemps()">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
           Enregistrer le relevé
         </button>
@@ -495,6 +496,7 @@ body.is-admin .admin-only-flex{display:flex}
           </div>
           <input type="file" id="photo-input-reception" accept="image/*" capture="environment" style="display:none" onchange="handlePhoto(this,'reception')">
         </div>
+        <div class="sign-row">
           <input class="sign-input" type="text" id="r-signe" placeholder="Signé par (prénom)">
           <button class="btn btn-teal" style="flex:1;margin-top:0" onclick="saveReception()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Valider
@@ -603,6 +605,7 @@ body.is-admin .admin-only-flex{display:flex}
           </div>
           <input type="file" id="photo-input-fournisseur" accept="image/*" capture="environment" style="display:none" onchange="handlePhoto(this,'fournisseur')">
         </div>
+        <div class="sign-row">
           <input class="sign-input" type="text" id="f-signe" placeholder="Signé par (prénom)">
           <button class="btn btn-blue" style="flex:1;margin-top:0" onclick="saveFourn()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/></svg>Enregistrer
@@ -645,6 +648,7 @@ body.is-admin .admin-only-flex{display:flex}
           </div>
           <input type="file" id="photo-input-nc" accept="image/*" capture="environment" style="display:none" onchange="handlePhoto(this,'nc')">
         </div>
+        <button class="btn btn-red" onclick="saveNC()">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
           Enregistrer la NC
         </button>
