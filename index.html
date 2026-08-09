@@ -1475,12 +1475,17 @@ async function initAdmin() {
   // Mettre à jour le bouton Gérer dans la page températures (visible si manager ou admin)
   const cfgBtn = document.querySelector('[onclick="goTo(\'config\')"]');
   if(cfgBtn) cfgBtn.style.display = isManager() ? 'flex' : 'none';
+
+  // Onglet Classeur HSA réservé au gérant/manager (contrats, licences...)
+  const classeurBtn = document.getElementById('nav-classeur');
+  if(classeurBtn) classeurBtn.style.display = isManager() ? 'flex' : 'none';
 }
 
 // Protéger la page config : seul manager/admin peut y accéder
 const _origGoTo = window.goTo;
 window.goTo = function(page) {
   if(page === 'config' && !isManager() && !isAdmin()) { showToast('Accès réservé au gérant ou manager'); return; }
+  if(page === 'classeur' && !isManager()) { showToast('Accès réservé au gérant ou manager'); return; }
   if(page === 'admin' && !isAdmin()) { showToast('Accès réservé à Thomas'); return; }
   _origGoTo(page);
   if(page === 'admin') loadAdminPage();
@@ -2930,11 +2935,19 @@ async function addClasseurCategory(){
   if(!name || !name.trim()) return;
   const trimmed = name.trim();
   if(_classeurConfig.categories.includes(trimmed)){ showToast('Cette catégorie existe déjà'); return; }
+  const previous = [..._classeurConfig.categories];
   _classeurConfig.categories.push(trimmed);
-  await window._setDoc(window._doc('classeurConfig','main'), _classeurConfig);
-  _classeurActiveCat = trimmed;
-  renderClasseurCats(); renderClasseurDocPanel();
-  showToast('Catégorie ajoutée');
+  renderClasseurCats();
+  try{
+    await window._setDoc(window._doc('classeurConfig','main'), _classeurConfig);
+    _classeurActiveCat = trimmed;
+    renderClasseurCats(); renderClasseurDocPanel();
+    showToast('Catégorie ajoutée');
+  }catch(e){
+    _classeurConfig.categories = previous;
+    renderClasseurCats();
+    showToast('Échec : ' + (e.code === 'permission-denied' ? 'règles Firestore à mettre à jour (voir guide)' : e.message));
+  }
 }
 window.addClasseurCategory = addClasseurCategory;
 
@@ -3075,11 +3088,21 @@ window.saveClasseurDoc = saveClasseurDoc;
 
 async function toggleClasseurShare(){
   const newVal = !(_classeurConfig.shareEnabled === true);
-  _classeurConfig.shareEnabled = newVal;
-  await window._setDoc(window._doc('classeurConfig','main'), _classeurConfig);
+  // Mise à jour visuelle immédiate (avant l'écriture réseau)
   document.getElementById('classeur-share-toggle').classList.toggle('on', newVal);
   document.getElementById('classeur-share-state').textContent = newVal ? 'Activé — consultable' : 'Désactivé';
-  showToast(newVal ? 'Partage activé' : 'Partage désactivé');
+  const previous = _classeurConfig.shareEnabled;
+  _classeurConfig.shareEnabled = newVal;
+  try{
+    await window._setDoc(window._doc('classeurConfig','main'), _classeurConfig);
+    showToast(newVal ? 'Partage activé' : 'Partage désactivé');
+  }catch(e){
+    // Écriture refusée (le plus souvent : règles Firestore pas encore mises à jour) → on annule visuellement
+    _classeurConfig.shareEnabled = previous;
+    document.getElementById('classeur-share-toggle').classList.toggle('on', previous === true);
+    document.getElementById('classeur-share-state').textContent = previous === true ? 'Activé — consultable' : 'Désactivé';
+    showToast('Échec : ' + (e.code === 'permission-denied' ? 'règles Firestore à mettre à jour (voir guide)' : e.message));
+  }
 }
 window.toggleClasseurShare = toggleClasseurShare;
 
