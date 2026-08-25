@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="HACCP Marmite">
+<meta name="apple-mobile-web-app-title" content="HACCP Moule">
 <meta name="theme-color" content="#185FA5">
-<title>HACCP — La Marmite Bleue</title>
+<title>HACCP — Moule & Smile</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
@@ -279,31 +279,6 @@ body.is-admin .admin-only-flex{display:flex}
 .modal-title{font-size:16px;font-weight:700}
 .modal-close{width:30px;height:30px;border-radius:50%;background:var(--bg);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;color:var(--text2)}
 .modal-body{padding:16px 18px}
-
-/* CLASSEUR HSA */
-.cat-scroll{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:10px;-webkit-overflow-scrolling:touch}
-.cat-scroll::-webkit-scrollbar{display:none}
-.cat-chip{flex-shrink:0;padding:8px 14px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-size:12.5px;font-weight:600;color:var(--text2);cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px}
-.cat-chip.active{background:var(--blue);border-color:var(--blue);color:#fff}
-.cat-chip .cnt{font-size:10px;opacity:.75}
-.cat-add-chip{flex-shrink:0;padding:8px 14px;border-radius:20px;border:1.5px dashed var(--text3);background:none;font-size:12.5px;font-weight:600;color:var(--text2);cursor:pointer;white-space:nowrap}
-.classeur-tip{font-size:11.5px;color:var(--text2);font-style:italic;margin:-2px 0 12px}
-.doc-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
-.doc-row:last-child{border:none}
-.doc-row-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
-.doc-row-body{flex:1;min-width:0}
-.doc-row-title{font-size:13.5px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.doc-row-meta{font-size:11px;color:var(--text2);margin-top:2px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-.doc-row-actions{display:flex;gap:12px;flex-shrink:0}
-.doc-row-actions a,.doc-row-actions button{background:none;border:none;color:var(--text2);font-size:16px;cursor:pointer;padding:2px;text-decoration:none}
-.share-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.toggle-sw{width:38px;height:22px;border-radius:12px;background:var(--border);position:relative;cursor:pointer;flex-shrink:0;transition:background .15s}
-.toggle-sw.on{background:var(--teal)}
-.toggle-sw .knob{position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:left .15s}
-.toggle-sw.on .knob{left:18px}
-.type-seg{display:flex;gap:6px;margin-bottom:12px}
-.type-seg button{flex:1;padding:9px;border-radius:8px;border:1px solid var(--border);background:var(--bg);font-size:12.5px;font-weight:600;color:var(--text2);cursor:pointer}
-.type-seg button.active{background:var(--text);color:#fff;border-color:var(--text)}
 .detail-section{margin-bottom:16px}
 .detail-section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);margin-bottom:8px}
 .detail-row{display:flex;justify-content:space-between;align-items:flex-start;padding:6px 0;border-bottom:1px solid var(--border)}
@@ -337,7 +312,7 @@ body.is-admin .admin-only-flex{display:flex}
 <!-- LOGIN / INSCRIPTION -->
 <div id="login-screen">
   <div class="login-logo">🐚</div>
-  <div class="login-title">HACCP — La Marmite Bleue</div>
+  <div class="login-title">HACCP — Moule & Smile</div>
   <div class="login-sub">Saint-Pierre-la-Mer · Fleury, Aude</div>
 
   <!-- Panneau connexion -->
@@ -380,29 +355,13 @@ body.is-admin .admin-only-flex{display:flex}
   </div>
 </div>
 
-<!-- CLASSEUR HSA — LIEN PUBLIC (lecture seule, sans connexion) -->
-<div id="classeur-share-screen" style="display:none;max-width:480px;margin:0 auto;min-height:100vh">
-  <div class="topbar">
-    <div class="topbar-left">
-      <div class="topbar-logo">🐚</div>
-      <div>
-        <div class="topbar-title">La Marmite Bleue</div>
-        <div class="topbar-sub">Classeur HSA — lecture seule</div>
-      </div>
-    </div>
-  </div>
-  <div class="content" style="padding:12px">
-    <div id="classeur-share-body"><div class="empty-state">Chargement...</div></div>
-  </div>
-</div>
-
 <!-- APP -->
 <div id="app-screen">
   <div class="topbar">
     <div class="topbar-left">
       <div class="topbar-logo">🐚</div>
       <div>
-        <div class="topbar-title">La Marmite Bleue</div>
+        <div class="topbar-title">Moule & Smile</div>
         <div class="topbar-sub" id="topbar-date">—</div>
       </div>
     </div>
@@ -746,7 +705,7 @@ body.is-admin .admin-only-flex{display:flex}
       <div class="doc-card" onclick="downloadHACCPDoc()">
         <div class="doc-card-icon icon-blue"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg></div>
         <div class="doc-card-body">
-          <div class="doc-card-title">Plan HACCP complet — La Marmite Bleue</div>
+          <div class="doc-card-title">Plan HACCP complet — Moule & Smile</div>
           <div class="doc-card-sub">Document Word (.docx) · 12 chapitres · Analyse des dangers, CCP, procédures, allergènes, traçabilité</div>
           <div class="doc-card-badge" style="background:#E6F1FB;color:#185FA5">⬇ Télécharger .docx</div>
         </div>
@@ -795,35 +754,6 @@ body.is-admin .admin-only-flex{display:flex}
         <div class="record-item"><div><div class="rec-title">Licence III</div><div class="rec-meta">Quota Fleury à vérifier</div></div><span class="status-pill pill-warn">À vérifier</span></div>
         <div class="record-item" style="border:none"><div><div class="rec-title">Contrat antiparasitaire</div><div class="rec-meta">Dératisation / désinsectisation</div></div><span class="status-pill pill-nc">À contractualiser</span></div>
       </div>
-    </div>
-
-    <!-- CLASSEUR HSA -->
-    <div class="page" id="page-classeur">
-      <div class="section-label" style="margin-top:4px">Classeur HSA — Documents &amp; justificatifs</div>
-      <div class="info-block">
-        <p>Contrats, attestations, déclarations et rapports à présenter en cas de contrôle DDPP — en complément des relevés quotidiens des autres onglets.</p>
-      </div>
-
-      <div class="rapport-card">
-        <div class="share-row">
-          <div>
-            <div style="font-size:13px;font-weight:600">Lien de visibilité auditeur</div>
-            <div style="font-size:11.5px;color:var(--text2)" id="classeur-share-state">Désactivé</div>
-          </div>
-          <div class="toggle-sw" id="classeur-share-toggle" onclick="toggleClasseurShare()"><div class="knob"></div></div>
-        </div>
-        <div style="display:flex;gap:8px;margin-top:12px">
-          <button class="btn btn-blue" style="flex:1" onclick="copyClasseurShareLink()">🔗 Copier le lien</button>
-          <button class="btn" style="flex:1;background:var(--bg);color:var(--text);border:1px solid var(--border)" onclick="downloadClasseurBinder()">📦 Télécharger tout</button>
-        </div>
-      </div>
-
-      <div class="cat-scroll" id="classeur-cat-scroll"></div>
-      <p class="classeur-tip" id="classeur-cat-tip"></p>
-
-      <div class="card" id="classeur-doc-list"><div class="empty-state">Chargement...</div></div>
-
-      <button class="btn btn-blue" style="margin-top:4px" onclick="openAddClasseurDocModal()">+ Ajouter un document</button>
     </div>
 
     <!-- CONFIG APPAREILS -->
@@ -955,10 +885,6 @@ body.is-admin .admin-only-flex{display:flex}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg> Word
           </button>
         </div>
-        <button class="btn btn-blue" style="margin-top:8px" onclick="saveRapportToClasseur()">
-          📥 Enregistrer dans le Classeur HSA
-        </button>
-        <div style="font-size:11px;color:var(--text2);margin-top:6px">Génère le PDF et le range automatiquement dans la catégorie « Rapports de période » du Classeur — pas de téléchargement/reupload manuel.</div>
       </div>
     </div>
 
@@ -984,10 +910,6 @@ body.is-admin .admin-only-flex{display:flex}
       <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
       <span class="nav-label">HACCP</span>
     </button>
-    <button class="nav-btn" id="nav-classeur" onclick="goTo('classeur')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-      <span class="nav-label">Classeur</span>
-    </button>
     <button class="nav-btn" id="nav-history" onclick="goTo('history')">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
       <span class="nav-label">Historique</span>
@@ -1001,44 +923,6 @@ body.is-admin .admin-only-flex{display:flex}
 </div>
 
 <div class="toast" id="toast"></div>
-
-<!-- MODAL AJOUT DOCUMENT — CLASSEUR HSA -->
-<div class="modal-overlay" id="classeur-modal" onclick="closeClasseurModalBg(event)">
-  <div class="modal-sheet">
-    <div class="modal-handle"></div>
-    <div class="modal-header">
-      <div class="modal-title">Ajouter un document</div>
-      <button class="modal-close" onclick="closeClasseurModal()">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="field">
-        <label>Catégorie / fournisseur</label>
-        <select id="cm-category"></select>
-      </div>
-      <div class="field">
-        <label>Nom du document</label>
-        <input type="text" id="cm-name" placeholder="Ex : Contrat dératisation Rentokil 2026">
-      </div>
-      <div class="type-seg">
-        <button type="button" id="cm-type-upload" class="active" onclick="setClasseurModalType('upload')">📄 Fichier</button>
-        <button type="button" id="cm-type-link" onclick="setClasseurModalType('link')">🔗 Lien</button>
-      </div>
-      <div class="field" id="cm-field-file">
-        <label>Fichier</label>
-        <input type="file" id="cm-file">
-      </div>
-      <div class="field" id="cm-field-url" style="display:none">
-        <label>URL</label>
-        <input type="text" id="cm-url" placeholder="https://...">
-      </div>
-      <div class="field">
-        <label>Date d'échéance (optionnel)</label>
-        <input type="date" id="cm-expiry">
-      </div>
-      <button class="btn btn-blue" id="cm-save-btn" onclick="saveClasseurDoc()">Enregistrer</button>
-    </div>
-  </div>
-</div>
 
 <!-- MODAL DÉTAIL ENREGISTREMENT -->
 <div class="modal-overlay" id="detail-modal" onclick="closeModal(event)">
@@ -1066,16 +950,16 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/fireba
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getFirestore, collection, addDoc, query, where, orderBy, limit,
-  getDocs, getDoc, setDoc, doc, deleteDoc, serverTimestamp, enableIndexedDbPersistence }
+  getDocs, getDoc, setDoc, doc, serverTimestamp, enableIndexedDbPersistence }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject }
+import { getStorage, ref, uploadBytes, getDownloadURL }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAz_OIdXYp7j4iYJouHp9RjMAVxJosj6-A",
-  authDomain: "haccp-marmite-bleue.firebaseapp.com",
-  projectId: "haccp-marmite-bleue",
-  storageBucket: "haccp-marmite-bleue.firebasestorage.app",
+  authDomain: "haccp-moule-smile.firebaseapp.com",
+  projectId: "haccp-moule-smile",
+  storageBucket: "haccp-moule-smile.firebasestorage.app",
   messagingSenderId: "618304598368",
   appId: "1:618304598368:web:63a93b6bfa7ac257e5ee05"
 };
@@ -1100,7 +984,6 @@ window._where = where;
 window._orderBy = orderBy;
 window._limit = limit;
 window._getDocs = getDocs;
-window._deleteDoc = deleteDoc;
 window._signOut = signOut;
 window._signIn = (e,p) => signInWithEmailAndPassword(auth, e, p);
 window._signUp = (e,p) => createUserWithEmailAndPassword(auth, e, p);
@@ -1108,14 +991,9 @@ window._storage = storage;
 window._storageRef = (path) => ref(storage, path);
 window._uploadBytes = uploadBytes;
 window._getDownloadURL = getDownloadURL;
-window._deleteObject = deleteObject;
 
 onAuthStateChanged(auth, async user => {
   document.getElementById('loading').style.display = 'none';
-  if(new URLSearchParams(window.location.search).has('classeurshare')){
-    if(window.renderClasseurShareView) window.renderClasseurShareView();
-    return;
-  }
   if(user){
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('app-screen').style.display = 'flex';
@@ -1422,7 +1300,6 @@ function goTo(page){
   if(page==='history') renderHistory();
   if(page==='fournisseurs') renderFournList();
   if(page==='nc') renderNCList();
-  if(page==='classeur') renderClasseur();
   if(page==='config') { renderCfgList(); refreshFournSelects(); }
 }
 window.goTo = goTo;
@@ -1475,17 +1352,12 @@ async function initAdmin() {
   // Mettre à jour le bouton Gérer dans la page températures (visible si manager ou admin)
   const cfgBtn = document.querySelector('[onclick="goTo(\'config\')"]');
   if(cfgBtn) cfgBtn.style.display = isManager() ? 'flex' : 'none';
-
-  // Onglet Classeur HSA réservé au gérant/manager (contrats, licences...)
-  const classeurBtn = document.getElementById('nav-classeur');
-  if(classeurBtn) classeurBtn.style.display = isManager() ? 'flex' : 'none';
 }
 
 // Protéger la page config : seul manager/admin peut y accéder
 const _origGoTo = window.goTo;
 window.goTo = function(page) {
   if(page === 'config' && !isManager() && !isAdmin()) { showToast('Accès réservé au gérant ou manager'); return; }
-  if(page === 'classeur' && !isManager()) { showToast('Accès réservé au gérant ou manager'); return; }
   if(page === 'admin' && !isAdmin()) { showToast('Accès réservé à Thomas'); return; }
   _origGoTo(page);
   if(page === 'admin') loadAdminPage();
@@ -1642,7 +1514,7 @@ function scheduleNotifChecks() {
         const deadline = s.heure * 60 + s.minute;
         // Déclencher dans les 10 min suivant la deadline
         if(hNow >= deadline && hNow < deadline + 10 && !sessions.includes(s.session)) {
-          new Notification('⚠ HACCP — La Marmite Bleue', {
+          new Notification('⚠ HACCP — Moule & Smile', {
             body: `Relevé de températures "${s.session}" non effectué !`,
             icon: '/favicon.ico',
             tag: 'haccp-' + s.session
@@ -1712,7 +1584,7 @@ async function exportRapportPDF() {
   showToast('⏳ Génération PDF...');
   const ok = await loadJsPDF();
   if(!ok) { showToast('Erreur chargement PDF'); return; }
-  const doc = buildPDFContent(_rapportRecs, `Rapport HACCP — La Marmite Bleue`, `${from} → ${to}`);
+  const doc = buildPDFContent(_rapportRecs, `Rapport HACCP — Moule & Smile`, `${from} → ${to}`);
   doc.save(`Rapport_HACCP_${from}_${to}.pdf`);
   showToast('✓ PDF exporté !');
 }
@@ -1796,7 +1668,7 @@ async function exportRapportWord() {
   let body = '';
 
   // Titre
-  body += wPar(wRun('RAPPORT HACCP — LA MARMITE BLEUE', {bold:true, size:32, color:'185FA5'}), {center:true, after:100});
+  body += wPar(wRun('RAPPORT HACCP — MOULE & SMILE', {bold:true, size:32, color:'185FA5'}), {center:true, after:100});
   body += wPar(wRun(`Période : ${from} → ${to}`, {italic:true, size:22, color:'6B6B65'}), {center:true, after:80});
   body += wPar(wRun(`Généré le ${new Date().toLocaleDateString('fr-FR')} · ${_rapportRecs.length} enregistrements · ${ncCount} NC · ${days} jours couverts`, {size:18, color:'6B6B65'}), {center:true, after:200});
 
@@ -1870,7 +1742,7 @@ async function exportRapportWord() {
   });
 
   // Pied
-  body += wPar(wRun('La Marmite Bleue · Saint-Pierre-la-Mer · Rapport HACCP · Conserver 3 ans minimum', {size:16, color:'9B9B95', italic:true}), {center:true, before:400});
+  body += wPar(wRun('Moule & Smile · Saint-Pierre-la-Mer · Rapport HACCP · Conserver 3 ans minimum', {size:16, color:'9B9B95', italic:true}), {center:true, before:400});
 
   // ── Assemblage XML OOXML ─────────────────────────────────────────────
   const docXml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -1948,7 +1820,7 @@ async function loadFournisseurs() {
     if(snap.exists() && snap.data().list) {
       _fournisseurs = snap.data().list;
     } else {
-      // Fournisseurs par défaut La Marmite Bleue
+      // Fournisseurs par défaut Moule & Smile
       _fournisseurs = [
         { nom: 'La Noisette d\'Oc', produits: 'Moules de Bouzigues' },
         { nom: 'V and B Narbonne', produits: 'Boissons, bières' },
@@ -2473,10 +2345,10 @@ async function refreshHome(){
 function downloadHACCPDoc(){
   // Lien vers le fichier .docx hébergé sur GitHub Pages (à mettre à jour après déploiement)
   // En attendant, ouvre un lien de téléchargement direct
-  const DOCX_URL = 'Plan_HACCP_LaMarmiteBleue.docx';
+  const DOCX_URL = 'Plan_HACCP_MouleSmile.docx';
   const a = document.createElement('a');
   a.href = DOCX_URL;
-  a.download = 'Plan_HACCP_LaMarmiteBleue.docx';
+  a.download = 'Plan_HACCP_MouleSmile.docx';
   a.click();
   showToast('⬇ Téléchargement du plan HACCP...');
 }
@@ -2653,7 +2525,7 @@ function buildPDFContent(recs, titre, periode){
     doc.setFillColor(24,95,165); doc.rect(0,0,W,18,'F');
     doc.setTextColor(255,255,255);
     doc.setFontSize(12); doc.setFont('helvetica','bold');
-    doc.text('HACCP — La Marmite Bleue', M, 8);
+    doc.text('HACCP — Moule & Smile', M, 8);
     doc.setFontSize(7.5); doc.setFont('helvetica','normal');
     doc.text('Saint-Pierre-la-Mer · Fleury', M, 13);
     doc.text(titre+' | '+periode+' | '+recs.length+' enreg.', W/2, 13, {align:'center'});
@@ -2780,7 +2652,7 @@ function buildPDFContent(recs, titre, periode){
   for(let i=1;i<=tp;i++){
     doc.setPage(i); drawHeader(i,tp);
     doc.setFontSize(7); doc.setTextColor(150,150,150); doc.setFont('helvetica','normal');
-    doc.text('La Marmite Bleue — HACCP — Conserver 3 ans minimum', W/2, H-3, {align:'center'});
+    doc.text('Moule & Smile — HACCP — Conserver 3 ans minimum', W/2, H-3, {align:'center'});
   }
   return doc;
 }
@@ -2807,7 +2679,7 @@ async function exportPDF(){
   const titre = 'Registre HACCP — ' + typeStr;
   const periode = (from||'—') + ' → ' + (to||'—');
   const doc = buildPDFContent(_filteredRecs, titre, periode);
-  doc.save('HACCP_MarmiteBleue_' + (from||'') + '_' + (to||'') + '.pdf');
+  doc.save('HACCP_MouleSmile_' + (from||'') + '_' + (to||'') + '.pdf');
   showToast('✓ PDF exporté !');
 }
 window.exportPDF = exportPDF;
@@ -2840,420 +2712,6 @@ async function exportSinglePDF(){
   showToast('✓ PDF exporté !');
 }
 window.exportSinglePDF = exportSinglePDF;
-
-// ══════════════════════════════════════════════════════════════════════
-// CLASSEUR HSA — Documents & justificatifs (module ajouté)
-// ══════════════════════════════════════════════════════════════════════
-const CLASSEUR_DEFAULT_CATEGORIES = [
-  "Rapports de période",
-  "Formation hygiène alimentaire",
-  "Déclarations & agréments",
-  "Contrats & licences",
-  "Lutte contre les nuisibles (3D)",
-  "Allergènes & étiquetage",
-  "Analyses & contrôle de l'eau"
-];
-const CLASSEUR_CATEGORY_TIPS = {
-  "Rapports de période": "Générés automatiquement depuis Admin → Rapport de période.",
-  "Formation hygiène alimentaire": "Conserver les attestations toute la durée d'emploi + 5 ans.",
-  "Déclarations & agréments": "Conserver sans limite de durée.",
-  "Contrats & licences": "Vérifier régulièrement les dates de renouvellement.",
-  "Lutte contre les nuisibles (3D)": "Contrat + derniers passages ; PV à conserver au moins 2 ans.",
-  "Allergènes & étiquetage": "À tenir à jour, cohérent avec la carte actuelle.",
-  "Analyses & contrôle de l'eau": "Conserver les résultats d'autocontrôles 5 ans."
-};
-
-let _classeurConfig = { categories: [...CLASSEUR_DEFAULT_CATEGORIES], docCounter: 0, shareEnabled: false };
-let _classeurDocs = [];
-let _classeurActiveCat = null;
-let _classeurModalType = 'upload';
-
-function classeurEsc(s){ return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-function classeurSanitizeFilename(s){ return (s||'fichier').replace(/[\/\\:*?"<>|]/g,'-').trim(); }
-function classeurFmtDate(ts){
-  if(!ts) return '—';
-  const d = ts.toDate ? ts.toDate() : new Date(ts);
-  return d.toLocaleDateString('fr-FR');
-}
-function classeurDaysUntil(dateStr){
-  if(!dateStr) return null;
-  return Math.ceil((new Date(dateStr) - new Date())/(1000*60*60*24));
-}
-
-async function loadClasseurConfig(){
-  try{
-    const snap = await window._getDoc(window._doc('classeurConfig','main'));
-    if(snap.exists()){
-      _classeurConfig = snap.data();
-      if(!_classeurConfig.categories || !_classeurConfig.categories.length) _classeurConfig.categories = [...CLASSEUR_DEFAULT_CATEGORIES];
-    } else {
-      _classeurConfig = { categories:[...CLASSEUR_DEFAULT_CATEGORIES], docCounter:0, shareEnabled:false };
-      await window._setDoc(window._doc('classeurConfig','main'), _classeurConfig);
-    }
-  }catch(e){ console.error('loadClasseurConfig', e); }
-}
-
-async function loadClasseurDocs(){
-  try{
-    const q = window._query(window._col('classeurDocuments'), window._orderBy('addedAt','desc'));
-    const snap = await window._getDocs(q);
-    _classeurDocs = snap.docs.map(d => ({ id:d.id, ...d.data() }));
-  }catch(e){ console.error('loadClasseurDocs', e); _classeurDocs = []; }
-}
-
-async function renderClasseur(){
-  document.getElementById('classeur-doc-list').innerHTML = '<div class="empty-state">Chargement...</div>';
-  await loadClasseurConfig();
-  await loadClasseurDocs();
-  if(!_classeurActiveCat || !_classeurConfig.categories.includes(_classeurActiveCat)){
-    _classeurActiveCat = _classeurConfig.categories[0];
-  }
-  const enabled = _classeurConfig.shareEnabled === true;
-  document.getElementById('classeur-share-toggle').classList.toggle('on', enabled);
-  document.getElementById('classeur-share-state').textContent = enabled ? 'Activé — consultable' : 'Désactivé';
-  renderClasseurCats();
-  renderClasseurDocPanel();
-}
-window.renderClasseur = renderClasseur;
-
-function renderClasseurCats(){
-  const counts = {};
-  _classeurDocs.forEach(d => { counts[d.category] = (counts[d.category]||0)+1; });
-  let html = '';
-  _classeurConfig.categories.forEach(cat => {
-    html += `<div class="cat-chip ${cat===_classeurActiveCat?'active':''}" onclick="selectClasseurCat('${cat.replace(/'/g,"\\'")}')">${classeurEsc(cat)}<span class="cnt">${counts[cat]||0}</span></div>`;
-  });
-  html += `<button class="cat-add-chip" onclick="addClasseurCategory()">+ Catégorie</button>`;
-  document.getElementById('classeur-cat-scroll').innerHTML = html;
-}
-
-function selectClasseurCat(cat){ _classeurActiveCat = cat; renderClasseurCats(); renderClasseurDocPanel(); }
-window.selectClasseurCat = selectClasseurCat;
-
-async function addClasseurCategory(){
-  const name = prompt('Nom de la catégorie ou du fournisseur (ex : Rentokil — Dératisation)');
-  if(!name || !name.trim()) return;
-  const trimmed = name.trim();
-  if(_classeurConfig.categories.includes(trimmed)){ showToast('Cette catégorie existe déjà'); return; }
-  const previous = [..._classeurConfig.categories];
-  _classeurConfig.categories.push(trimmed);
-  renderClasseurCats();
-  try{
-    await window._setDoc(window._doc('classeurConfig','main'), _classeurConfig);
-    _classeurActiveCat = trimmed;
-    renderClasseurCats(); renderClasseurDocPanel();
-    showToast('Catégorie ajoutée');
-  }catch(e){
-    _classeurConfig.categories = previous;
-    renderClasseurCats();
-    showToast('Échec : ' + (e.code === 'permission-denied' ? 'règles Firestore à mettre à jour (voir guide)' : e.message));
-  }
-}
-window.addClasseurCategory = addClasseurCategory;
-
-function renderClasseurDocPanel(){
-  document.getElementById('classeur-cat-tip').textContent = CLASSEUR_CATEGORY_TIPS[_classeurActiveCat] || '';
-  const items = _classeurDocs.filter(d => d.category === _classeurActiveCat);
-  const list = document.getElementById('classeur-doc-list');
-  if(items.length === 0){
-    list.innerHTML = `<div class="empty-state">Aucun document dans « ${classeurEsc(_classeurActiveCat)} » pour le moment.</div>`;
-    return;
-  }
-  list.innerHTML = items.map(docItem => {
-    const days = docItem.expiryDate ? classeurDaysUntil(docItem.expiryDate) : null;
-    let expTxt = '', expColor = 'var(--text2)';
-    if(docItem.expiryDate){
-      expTxt = new Date(docItem.expiryDate).toLocaleDateString('fr-FR');
-      if(days < 0){ expTxt = 'Expiré'; expColor = 'var(--red)'; }
-      else if(days <= 30){ expTxt += ' (bientôt)'; expColor = 'var(--amber)'; }
-    }
-    return `<div class="doc-row">
-      <div class="doc-row-icon" style="background:${docItem.type==='upload'?'var(--blue-light)':'var(--purple-light)'};color:${docItem.type==='upload'?'var(--blue)':'var(--purple)'}">${docItem.type==='upload'?'📄':'🔗'}</div>
-      <div class="doc-row-body">
-        <div class="doc-row-title">${classeurEsc(docItem.name)}</div>
-        <div class="doc-row-meta">
-          <span>${classeurEsc(docItem.ref||'')}</span>
-          <span>·</span>
-          <span>${classeurFmtDate(docItem.addedAt)}</span>
-          ${docItem.expiryDate ? `<span>·</span><span style="color:${expColor};font-weight:600">${expTxt}</span>` : ''}
-        </div>
-      </div>
-      <div class="doc-row-actions">
-        <a href="${docItem.url}" target="_blank" rel="noopener" title="Ouvrir">↗</a>
-        <button onclick="deleteClasseurDoc('${docItem.id}')" title="Supprimer">✕</button>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-async function deleteClasseurDoc(id){
-  const target = _classeurDocs.find(d => d.id === id);
-  if(!target) return;
-  if(!confirm(`Supprimer « ${target.name} » ?`)) return;
-  try{
-    await window._deleteDoc(window._doc('classeurDocuments', id));
-    if(target.type === 'upload' && target.storagePath){
-      try{ await window._deleteObject(window._storageRef(target.storagePath)); }catch(e){}
-    }
-    await loadClasseurDocs();
-    renderClasseurCats(); renderClasseurDocPanel();
-    showToast('Document supprimé');
-  }catch(e){ showToast('Erreur : ' + e.message); }
-}
-window.deleteClasseurDoc = deleteClasseurDoc;
-
-function openAddClasseurDocModal(){
-  const sel = document.getElementById('cm-category');
-  sel.innerHTML = _classeurConfig.categories.map(c => `<option value="${classeurEsc(c)}" ${c===_classeurActiveCat?'selected':''}>${classeurEsc(c)}</option>`).join('');
-  document.getElementById('cm-name').value = '';
-  document.getElementById('cm-url').value = '';
-  document.getElementById('cm-expiry').value = '';
-  document.getElementById('cm-file').value = '';
-  setClasseurModalType('upload');
-  document.getElementById('classeur-modal').classList.add('open');
-}
-window.openAddClasseurDocModal = openAddClasseurDocModal;
-
-function setClasseurModalType(t){
-  _classeurModalType = t;
-  document.getElementById('cm-type-upload').classList.toggle('active', t==='upload');
-  document.getElementById('cm-type-link').classList.toggle('active', t==='link');
-  document.getElementById('cm-field-file').style.display = t==='upload' ? 'block' : 'none';
-  document.getElementById('cm-field-url').style.display = t==='link' ? 'block' : 'none';
-}
-window.setClasseurModalType = setClasseurModalType;
-
-function closeClasseurModal(){ document.getElementById('classeur-modal').classList.remove('open'); }
-window.closeClasseurModal = closeClasseurModal;
-function closeClasseurModalBg(e){ if(e.target === document.getElementById('classeur-modal')) closeClasseurModal(); }
-window.closeClasseurModalBg = closeClasseurModalBg;
-
-async function saveClasseurDoc(){
-  const category = document.getElementById('cm-category').value;
-  const name = document.getElementById('cm-name').value.trim();
-  const expiry = document.getElementById('cm-expiry').value || null;
-  if(!name){ showToast('Indique un nom de document'); return; }
-
-  let url='', type=_classeurModalType, storagePath=null, fileName=null;
-  const btn = document.getElementById('cm-save-btn');
-
-  if(_classeurModalType === 'upload'){
-    const fileInput = document.getElementById('cm-file');
-    if(!fileInput.files.length){ showToast('Choisis un fichier'); return; }
-    const file = fileInput.files[0];
-    fileName = file.name;
-    storagePath = `classeur/${Date.now()}_${file.name}`;
-    btn.disabled = true; btn.textContent = 'Envoi en cours...';
-    try{
-      const sref = window._storageRef(storagePath);
-      await window._uploadBytes(sref, file);
-      url = await window._getDownloadURL(sref);
-    }catch(e){
-      showToast('Échec upload : ' + e.message);
-      btn.disabled = false; btn.textContent = 'Enregistrer';
-      return;
-    }
-  } else {
-    url = document.getElementById('cm-url').value.trim();
-    if(!url){ showToast('Indique un lien'); return; }
-    if(!/^https?:\/\//i.test(url)) url = 'https://' + url;
-  }
-
-  const newCounter = (_classeurConfig.docCounter || 0) + 1;
-  const year = new Date().getFullYear();
-  const ref = `HSA-${year}-${String(newCounter).padStart(4,'0')}`;
-
-  try{
-    await window._addDoc(window._col('classeurDocuments'), {
-      category, name, type, url, storagePath, fileName, expiryDate: expiry, ref,
-      addedAt: window._serverTS(),
-      addedBy: window._userEmail || ''
-    });
-    _classeurConfig.docCounter = newCounter;
-    await window._setDoc(window._doc('classeurConfig','main'), _classeurConfig);
-  }catch(e){
-    showToast('Erreur enregistrement : ' + e.message);
-    btn.disabled = false; btn.textContent = 'Enregistrer';
-    return;
-  }
-
-  closeClasseurModal();
-  _classeurActiveCat = category;
-  await loadClasseurDocs();
-  renderClasseurCats(); renderClasseurDocPanel();
-  showToast('Document ajouté');
-  btn.disabled = false; btn.textContent = 'Enregistrer';
-}
-window.saveClasseurDoc = saveClasseurDoc;
-
-async function toggleClasseurShare(){
-  const newVal = !(_classeurConfig.shareEnabled === true);
-  // Mise à jour visuelle immédiate (avant l'écriture réseau)
-  document.getElementById('classeur-share-toggle').classList.toggle('on', newVal);
-  document.getElementById('classeur-share-state').textContent = newVal ? 'Activé — consultable' : 'Désactivé';
-  const previous = _classeurConfig.shareEnabled;
-  _classeurConfig.shareEnabled = newVal;
-  try{
-    await window._setDoc(window._doc('classeurConfig','main'), _classeurConfig);
-    showToast(newVal ? 'Partage activé' : 'Partage désactivé');
-  }catch(e){
-    // Écriture refusée (le plus souvent : règles Firestore pas encore mises à jour) → on annule visuellement
-    _classeurConfig.shareEnabled = previous;
-    document.getElementById('classeur-share-toggle').classList.toggle('on', previous === true);
-    document.getElementById('classeur-share-state').textContent = previous === true ? 'Activé — consultable' : 'Désactivé';
-    showToast('Échec : ' + (e.code === 'permission-denied' ? 'règles Firestore à mettre à jour (voir guide)' : e.message));
-  }
-}
-window.toggleClasseurShare = toggleClasseurShare;
-
-async function copyClasseurShareLink(){
-  if(_classeurConfig.shareEnabled !== true){ await toggleClasseurShare(); }
-  const url = `${location.origin}${location.pathname}?classeurshare=1`;
-  try{ await navigator.clipboard.writeText(url); showToast('Lien copié'); }
-  catch(e){ prompt('Copie le lien :', url); }
-}
-window.copyClasseurShareLink = copyClasseurShareLink;
-
-async function downloadClasseurBinder(){
-  if(_classeurDocs.length === 0){ showToast('Aucun document à télécharger'); return; }
-  showToast('⏳ Préparation du zip...');
-  const zipOk = await new Promise(res=>{
-    if(window.JSZip){res(true);return;}
-    const s=document.createElement('script');
-    s.src='https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
-    s.onload=()=>res(true); s.onerror=()=>res(false);
-    document.head.appendChild(s);
-  });
-  if(!zipOk){ showToast('Erreur chargement JSZip'); return; }
-  try{
-    const zip = new window.JSZip();
-    const byCat = {};
-    _classeurDocs.forEach(d => { (byCat[d.category] = byCat[d.category]||[]).push(d); });
-    let sommaire = "CLASSEUR HSA — LA MARMITE BLEUE\nGénéré le " + new Date().toLocaleDateString('fr-FR') + "\n" + "=".repeat(50) + "\n";
-    for(const cat of Object.keys(byCat)){
-      const folder = zip.folder(classeurSanitizeFilename(cat));
-      sommaire += `\n\n${cat.toUpperCase()}\n${'-'.repeat(cat.length)}\n`;
-      for(const docItem of byCat[cat]){
-        const exp = docItem.expiryDate ? `, échéance ${new Date(docItem.expiryDate).toLocaleDateString('fr-FR')}` : '';
-        sommaire += `[${docItem.ref}] ${docItem.name} — ajouté le ${classeurFmtDate(docItem.addedAt)}${exp}\n`;
-        if(docItem.type === 'upload'){
-          try{
-            const resp = await fetch(docItem.url);
-            const blob = await resp.blob();
-            folder.file(classeurSanitizeFilename(docItem.fileName || docItem.name), blob);
-          }catch(e){ sommaire += `   (fichier non récupéré automatiquement)\n`; }
-        } else {
-          sommaire += `   Lien : ${docItem.url}\n`;
-        }
-      }
-    }
-    zip.file('sommaire.txt', sommaire);
-    const blob = await zip.generateAsync({type:'blob'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url; a.download = `Classeur-HSA-${new Date().toISOString().slice(0,10)}.zip`;
-    document.body.appendChild(a); a.click(); a.remove();
-    URL.revokeObjectURL(url);
-    showToast('✓ Classeur téléchargé');
-  }catch(e){ showToast('Erreur lors de la génération du zip'); }
-}
-window.downloadClasseurBinder = downloadClasseurBinder;
-
-// ── Archivage automatique du rapport de période vers le Classeur ────────
-async function saveRapportToClasseur(){
-  if(_rapportRecs.length === 0){ await previewRapport(); }
-  if(_rapportRecs.length === 0){ showToast('Aucune donnée pour cette période'); return; }
-  const from = document.getElementById('rpt-from').value;
-  const to = document.getElementById('rpt-to').value;
-  if(!from || !to){ showToast('Sélectionner une période'); return; }
-  showToast('⏳ Génération et enregistrement...');
-  const ok = await loadJsPDF();
-  if(!ok){ showToast('Erreur chargement PDF'); return; }
-  try{
-    const pdfDoc = buildPDFContent(_rapportRecs, `Rapport HACCP — La Marmite Bleue`, `${from} → ${to}`);
-    const blob = pdfDoc.output('blob');
-    const fileName = `Rapport_HACCP_${from}_${to}.pdf`;
-    const storagePath = `classeur/${Date.now()}_${fileName}`;
-    const sref = window._storageRef(storagePath);
-    await window._uploadBytes(sref, blob);
-    const url = await window._getDownloadURL(sref);
-
-    await loadClasseurConfig();
-    const category = "Rapports de période";
-    if(!_classeurConfig.categories.includes(category)){
-      _classeurConfig.categories.unshift(category);
-    }
-    const newCounter = (_classeurConfig.docCounter || 0) + 1;
-    const year = new Date().getFullYear();
-    const ref = `HSA-${year}-${String(newCounter).padStart(4,'0')}`;
-
-    await window._addDoc(window._col('classeurDocuments'), {
-      category, name: `Rapport HACCP ${from} → ${to}`, type:'upload',
-      url, storagePath, fileName, expiryDate:null, ref,
-      addedAt: window._serverTS(), addedBy: window._userEmail || ''
-    });
-    _classeurConfig.docCounter = newCounter;
-    await window._setDoc(window._doc('classeurConfig','main'), _classeurConfig);
-
-    showToast('✓ Rapport enregistré dans le Classeur HSA');
-  }catch(e){
-    showToast('Erreur : ' + e.message);
-  }
-}
-window.saveRapportToClasseur = saveRapportToClasseur;
-
-// ── Lien public de partage (lecture seule, sans connexion) ──────────────
-async function renderClasseurShareView(){
-  document.getElementById('loading').style.display = 'none';
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('app-screen').style.display = 'none';
-  document.getElementById('classeur-share-screen').style.display = 'block';
-  const body = document.getElementById('classeur-share-body');
-  try{
-    const cfgSnap = await window._getDoc(window._doc('classeurConfig','main'));
-    const cfg = cfgSnap.exists() ? cfgSnap.data() : null;
-    if(!cfg || cfg.shareEnabled !== true){
-      body.innerHTML = '<div class="empty-state">Ce lien a été désactivé, ou n\'existe pas.</div>';
-      return;
-    }
-    const q = window._query(window._col('classeurDocuments'), window._orderBy('addedAt','desc'));
-    const snap = await window._getDocs(q);
-    const docs = snap.docs.map(d => d.data());
-    const categories = cfg.categories && cfg.categories.length ? cfg.categories : CLASSEUR_DEFAULT_CATEGORIES;
-    const byCat = {};
-    docs.forEach(d => { (byCat[d.category] = byCat[d.category]||[]).push(d); });
-    const allCats = [...new Set([...categories, ...Object.keys(byCat)])];
-    let html = '';
-    allCats.forEach(cat => {
-      const items = byCat[cat] || [];
-      if(items.length === 0) return;
-      html += `<div class="section-label">${classeurEsc(cat)}</div><div class="card">`;
-      items.forEach(docItem => {
-        const days = docItem.expiryDate ? classeurDaysUntil(docItem.expiryDate) : null;
-        let expTxt = docItem.expiryDate ? new Date(docItem.expiryDate).toLocaleDateString('fr-FR') : '';
-        let expColor = 'var(--text2)';
-        if(days !== null){
-          if(days < 0){ expTxt='Expiré'; expColor='var(--red)'; }
-          else if(days<=30){ expTxt+=' (bientôt)'; expColor='var(--amber)'; }
-        }
-        html += `<div class="doc-row">
-          <div class="doc-row-icon" style="background:${docItem.type==='upload'?'var(--blue-light)':'var(--purple-light)'};color:${docItem.type==='upload'?'var(--blue)':'var(--purple)'}">${docItem.type==='upload'?'📄':'🔗'}</div>
-          <div class="doc-row-body">
-            <div class="doc-row-title">${classeurEsc(docItem.name)}</div>
-            <div class="doc-row-meta"><span>${classeurEsc(docItem.ref||'')}</span><span>·</span><span>${classeurFmtDate(docItem.addedAt)}</span>${docItem.expiryDate?`<span>·</span><span style="color:${expColor};font-weight:600">${expTxt}</span>`:''}</div>
-          </div>
-          <div class="doc-row-actions"><a href="${docItem.url}" target="_blank" rel="noopener">↗</a></div>
-        </div>`;
-      });
-      html += `</div>`;
-    });
-    body.innerHTML = html || '<div class="empty-state">Aucun document disponible pour le moment.</div>';
-  }catch(e){
-    body.innerHTML = '<div class="empty-state">Impossible de charger le classeur.</div>';
-  }
-}
-window.renderClasseurShareView = renderClasseurShareView;
-
 
 </script>
 </body>
