@@ -1365,7 +1365,7 @@ async function doLogout(){ await window._signOut(window._auth); }
 window.doLogout = doLogout;
 
 // ── INIT ────────────────────────────────────────────────────────────────
-function initApp(){
+async function initApp(){
   document.getElementById('topbar-date').textContent = fmtDate(NOW);
   document.getElementById('t-date-sub').textContent = fmtDate(NOW);
   // Afficher le prénom dans la topbar
@@ -1386,8 +1386,8 @@ function initApp(){
   setSyncState('ok');
   refreshHome();
   loadAppareils();
-  loadFournisseurs();
-  initAdmin();
+  await loadFournisseurs();
+  await initAdmin();
   checkAlertes();
   // Dates par défaut du rapport
   const rptTo = document.getElementById('rpt-to');
