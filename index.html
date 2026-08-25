@@ -1469,6 +1469,10 @@ async function initAdmin() {
   // Le rôle est déjà chargé dans onAuthStateChanged — on applique juste les droits
   console.log('[ADMIN] role:', window._userRole, '→ isAdmin:', isAdmin());
 
+  // Debug visible dans l'appli
+  const debugEl = document.getElementById('topbar-user');
+  if(debugEl) debugEl.textContent = (window._prenom || '?') + ' [' + (window._userRole || 'none') + ']';
+
   if(isAdmin()) {
     document.body.classList.add('is-admin');
   } else {
