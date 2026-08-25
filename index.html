@@ -1121,17 +1121,24 @@ onAuthStateChanged(auth, async user => {
     document.getElementById('app-screen').style.display = 'flex';
     window._uid = user.uid;
     window._userEmail = user.email;
-    // Charger le profil (prénom) depuis Firestore
+    // Charger le profil ET le rôle depuis Firestore avant initApp
     try {
-      const snap = await getDoc(doc(db, 'users', user.uid));
-      window._prenom = snap.exists() ? (snap.data().prenom || '') : '';
-    } catch(e){ window._prenom = ''; }
-    initApp();
+      const snap = await window._getDoc(window._doc('users', user.uid));
+      if(snap.exists()) {
+        window._prenom = snap.data().prenom || '';
+        window._userRole = snap.data().role || 'employe';
+      } else {
+        window._prenom = '';
+        window._userRole = 'employe';
+      }
+    } catch(e){ window._prenom = ''; window._userRole = 'employe'; }
+    await initApp();
   } else {
     document.getElementById('login-screen').style.display = 'flex';
     document.getElementById('app-screen').style.display = 'none';
     window._uid = null;
     window._prenom = '';
+    window._userRole = 'employe';
   }
 });
 
@@ -1459,13 +1466,9 @@ function isManager() {
 }
 
 async function initAdmin() {
-  // Charger le rôle de l'utilisateur connecté
-  try {
-    const snap = await window._getDoc(window._doc('users', window._uid));
-    window._userRole = snap.exists() ? (snap.data().role || 'employe') : 'employe';
-  } catch(e) { window._userRole = 'employe'; }
+  // Le rôle est déjà chargé dans onAuthStateChanged — on applique juste les droits
+  console.log('[ADMIN] role:', window._userRole, '→ isAdmin:', isAdmin());
 
-  // Appliquer la classe admin sur le body
   if(isAdmin()) {
     document.body.classList.add('is-admin');
   } else {
