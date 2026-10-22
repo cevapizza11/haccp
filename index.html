@@ -404,7 +404,7 @@ body.is-admin .admin-only-flex{display:flex}
     <div class="topbar-left">
       <div class="topbar-logo">🐚</div>
       <div>
-        <div class="topbar-title">Moule & Smile <span style="font-size:10px;font-weight:400;opacity:.6">v.17/10/2026 09:00</span></div>
+        <div class="topbar-title">Moule & Smile <span style="font-size:10px;font-weight:400;opacity:.6">v.22/10/2026 19:15</span></div>
         <div class="topbar-sub" id="topbar-date">—</div>
       </div>
     </div>
@@ -1124,16 +1124,24 @@ onAuthStateChanged(auth, async user => {
     window._uid = user.uid;
     window._userEmail = user.email;
     // Charger le profil ET le rôle depuis Firestore avant initApp
+    let enAttente = false, refuse = false;
     try {
       const snap = await window._getDoc(window._doc('users', user.uid));
       if(snap.exists()) {
         window._prenom = snap.data().prenom || '';
         window._userRole = snap.data().role || 'employe';
+        // 22/10/2026 : compte pas encore validé par le gérant (les comptes existants n'ont pas ce champ → validés)
+        enAttente = snap.data().valide === false && window._userRole !== 'admin';
+        refuse = snap.data().refuse === true;
       } else {
+        // Compte sans profil : on crée un profil « en attente » que le gérant pourra valider
         window._prenom = '';
         window._userRole = 'employe';
+        try { await window._setDoc(window._doc('users', user.uid), { prenom:'', email:user.email||'', createdAt: window._serverTS(), valide:false }); } catch(e2){}
+        enAttente = true;
       }
     } catch(e){ window._prenom = ''; window._userRole = 'employe'; }
+    if(enAttente){ afficherCompteEnAttente(refuse); return; }
     await initApp();
   } else {
     document.getElementById('login-screen').style.display = 'flex';
@@ -1347,7 +1355,8 @@ async function doRegister(){
     const cred = await window._signUp(email, pwd);
     // Sauvegarder le prénom dans Firestore collection "users"
     await window._setDoc(window._doc('users', cred.user.uid), {
-      prenom, email, createdAt: window._serverTS()
+      prenom, email, createdAt: window._serverTS(),
+      valide: false   // 22/10/2026 : nouveau compte en attente de validation par le gérant
     });
     // onAuthStateChanged va prendre le relais automatiquement
   } catch(e){
@@ -1361,6 +1370,30 @@ async function doRegister(){
   }
 }
 window.doRegister = doRegister;
+
+// ── COMPTE EN ATTENTE DE VALIDATION (22/10/2026) ───────────────────────
+// Un compte créé avec « Créer mon compte » ne voit rien tant que le gérant ne l'a pas validé
+// (page Admin → Employés → ✅ Valider). Les règles Firestore bloquent aussi l'accès côté serveur.
+function afficherCompteEnAttente(refuse){
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app-screen').style.display = 'none';
+  let el = document.getElementById('ecran-attente');
+  if(!el){
+    el = document.createElement('div');
+    el.id = 'ecran-attente';
+    el.style.cssText = 'position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;background:var(--bg,#f5f5f2);font-family:inherit';
+    document.body.appendChild(el);
+  }
+  el.style.display = 'flex';
+  el.innerHTML = `<div style="max-width:380px;width:100%;text-align:center;background:#fff;border-radius:16px;padding:28px 22px;box-shadow:0 4px 20px rgba(0,0,0,.08)">
+    <div style="font-size:46px;margin-bottom:10px">${refuse?'⛔':'⏳'}</div>
+    <div style="font-size:19px;font-weight:700;margin-bottom:8px">${refuse?'Accès refusé':'Compte en attente de validation'}</div>
+    <div style="font-size:14px;color:#666;line-height:1.5;margin-bottom:18px">${refuse?'Le gérant n\'a pas validé ce compte. Parle-lui si c\'est une erreur.':'Ton compte est bien créé. Le gérant doit maintenant le valider avant que tu puisses utiliser l\'appli HACCP.'}<br><span style="font-size:12px;color:#999">${window._userEmail||''}</span></div>
+    <button onclick="location.reload()" style="width:100%;padding:12px;border:none;border-radius:10px;background:#185FA5;color:#fff;font-weight:600;font-size:15px;cursor:pointer;margin-bottom:8px">🔄 Vérifier à nouveau</button>
+    <button onclick="window._signOut(window._auth).then(()=>location.reload())" style="width:100%;padding:12px;border:1px solid #ccc;border-radius:10px;background:none;font-size:14px;cursor:pointer">Se déconnecter</button>
+  </div>`;
+}
+window.afficherCompteEnAttente = afficherCompteEnAttente;
 
 document.addEventListener('keydown', e => {
   if(e.key==='Enter'){
@@ -1509,10 +1542,21 @@ async function loadEmpList() {
     const q = window._query(window._col('users'), window._limit(50));
     const snap = await window._getDocs(q);
     if(snap.empty) { el.innerHTML='<div class="empty-state">Aucun employé inscrit</div>'; return; }
-    el.innerHTML = snap.docs.map(d => {
+    // 22/10/2026 : comptes en attente de validation (et refusés) en premier
+    const docsTries = snap.docs.slice().sort((a,b)=>((a.data().valide===false?0:1)-(b.data().valide===false?0:1)));
+    el.innerHTML = docsTries.map(d => {
       const u = d.data();
       const uid = d.id;
       const role = u.role || 'employe';
+      if(u.valide === false && role !== 'admin') return `<div class="emp-item" style="background:${u.refuse?'#fdeeee':'#fff8e6'};border-radius:10px">
+        <div class="emp-avatar">${(u.prenom||u.email||'?')[0]}</div>
+        <div class="emp-body">
+          <div class="emp-name">${u.prenom||'—'}</div>
+          <div class="emp-role">${u.refuse?'⛔ Refusé':'⏳ En attente de validation'} · ${u.email||''}</div>
+        </div>
+        <button class="role-toggle" style="color:#1a7a4a;border-color:#1a7a4a" onclick="validerCompte('${uid}','${(u.prenom||u.email||'').replace(/'/g,"\\'")}')">✅ Valider</button>
+        ${u.refuse?'':`<button class="role-toggle" style="color:#c0392b;border-color:#c0392b;margin-left:6px" onclick="refuserCompte('${uid}','${(u.prenom||u.email||'').replace(/'/g,"\\'")}')">Refuser</button>`}
+      </div>`;
       const isSelf = uid === window._uid;
       const isAdminUser = role === 'admin';
 
@@ -1563,6 +1607,19 @@ async function toggleRole(uid, currentRole, prenom) {
   } catch(e) { showToast('Erreur : ' + e.message); }
 }
 window.toggleRole = toggleRole;
+
+async function validerCompte(uid, nom){
+  if(!confirm(`Valider le compte de ${nom} ? Il pourra utiliser l'appli HACCP.`)) return;
+  try { await window._setDoc(window._doc('users', uid), { valide:true, refuse:false }, { merge:true }); showToast(`✓ ${nom} validé`); loadEmpList(); }
+  catch(e){ showToast('Erreur : ' + e.message); }
+}
+async function refuserCompte(uid, nom){
+  if(!confirm(`Refuser le compte de ${nom} ? Il n'aura accès à rien.`)) return;
+  try { await window._setDoc(window._doc('users', uid), { valide:false, refuse:true }, { merge:true }); showToast(`${nom} refusé`); loadEmpList(); }
+  catch(e){ showToast('Erreur : ' + e.message); }
+}
+window.validerCompte = validerCompte;
+window.refuserCompte = refuserCompte;
 
 // ── ALERTES RELEVÉS MANQUANTS ───────────────────────────────────────────
 const SESSIONS_HEURES = [
