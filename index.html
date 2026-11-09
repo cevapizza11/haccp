@@ -500,7 +500,7 @@ a{color:var(--gold)}
     <div class="topbar-left">
       <div class="topbar-logo">🐚</div>
       <div>
-        <div class="topbar-title">Moule & Smile <span style="font-size:10px;font-weight:400;opacity:.6">v.01/11/2026 18:55</span></div>
+        <div class="topbar-title">Moule & Smile <span style="font-size:10px;font-weight:400;opacity:.6">v.09/11/2026 12:55</span></div>
         <div class="topbar-sub" id="topbar-date">—</div>
       </div>
     </div>
@@ -623,6 +623,10 @@ a{color:var(--gold)}
           <div class="check-item"><div class="check-box" id="rc4" onclick="tog('rc4')"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span class="check-text">Étiquetage complet et lisible</span></div>
           <div class="check-item"><div class="check-box" id="rc5" onclick="tog('rc5')"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span class="check-text">Aspect visuel et olfactif satisfaisant</span></div>
           <div class="check-item"><div class="check-box" id="rc6" onclick="tog('rc6')"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><span class="check-text">Véhicule de livraison propre et isotherme</span></div>
+        </div>
+        <div id="r-dlc-wrap" style="display:none;margin-top:12px">
+          <div class="field"><label>DLC / DDM relevée (la plus courte de la livraison)</label><input type="date" id="r-dlc" oninput="chkRDlc()"></div>
+          <div id="r-dlc-info" style="font-size:12px;margin:-6px 0 6px;font-weight:500"></div>
         </div>
         <div class="field" style="margin-top:12px"><label>Observations / Réserves</label><textarea id="r-obs" placeholder="Produits refusés, réserves émises, anomalies..."></textarea></div>
         <div class="photo-zone">
@@ -1572,6 +1576,11 @@ function tog(id){
   if(!el) return;
   checks[id] = !checks[id];
   el.classList.toggle('on', checks[id]);
+  if(id==='rc3'){
+    const w=document.getElementById('r-dlc-wrap');
+    if(w) w.style.display = checks[id] ? 'block' : 'none';
+    if(!checks[id]){ const d=document.getElementById('r-dlc'); if(d) d.value=''; chkRDlc(); }
+  }
 }
 window.tog = tog;
 function countChecks(prefix, total){
@@ -1583,6 +1592,11 @@ function resetChecks(prefix){
     const el = document.getElementById(k);
     if(el) el.classList.remove('on');
   });
+  if(prefix==='rc'){
+    const w=document.getElementById('r-dlc-wrap'); if(w) w.style.display='none';
+    const d=document.getElementById('r-dlc'); if(d) d.value='';
+    chkRDlc();
+  }
 }
 
 // ── ADMIN / RÔLES ───────────────────────────────────────────────────────
@@ -2000,9 +2014,9 @@ async function exportRapportWord() {
       );
     } else if(type==='reception'){
       body += wTable(
-        ['Date','Heure','Fournisseur','N° BL','T° livraison','Contrôles','Observations','Signé par','Statut'],
-        group.map(r=>[r.date,r.time,(r.fourn||'—').substring(0,25),r.bl||'—',r.temp?r.temp+'°C':'—',r.checks||'—',(r.obs||'').substring(0,25),r.signe||'—',r.hasNC?'NC':'OK']),
-        [1200,900,2400,1400,1200,1000,2500,1500,926], group.map(r=>r.hasNC)
+        ['Date','Heure','Fournisseur','N° BL','T° livraison','Contrôles','DLC','Observations','Signé par','Statut'],
+        group.map(r=>[r.date,r.time,(r.fourn||'—').substring(0,25),r.bl||'—',r.temp?r.temp+'°C':'—',r.checks||'—',r.dlc?r.dlc.split('-').reverse().join('/'):'—',(r.obs||'').substring(0,25),r.signe||'—',r.hasNC?'NC':'OK']),
+        [1200,900,2100,1300,1100,900,1200,2200,1400,926], group.map(r=>r.hasNC)
       );
     } else if(type==='nettoyage'){
       body += wTable(
@@ -2402,6 +2416,16 @@ function chkRTemp(){
 }
 window.chkRTemp = chkRTemp;
 
+function chkRDlc(){
+  const d = document.getElementById('r-dlc');
+  const el = document.getElementById('r-dlc-info');
+  if(!d || !el) return;
+  if(!d.value){ el.textContent=''; return; }
+  if(d.value <= TODAY){ el.style.color='var(--red)'; el.textContent='✕ DLC dépassée ou du jour — produit à refuser ou à écarter, le noter dans les observations'; }
+  else { el.style.color='var(--green)'; el.textContent='✓ DLC / DDM valide'; }
+}
+window.chkRDlc = chkRDlc;
+
 async function saveReception(){
   if(!document.getElementById('r-fourn').value){ showToast('Sélectionner un fournisseur'); return; }
   const rec = {
@@ -2412,6 +2436,7 @@ async function saveReception(){
     obs: document.getElementById('r-obs').value || '',
     signe: document.getElementById('r-signe').value || 'N/A',
     checks: countChecks('rc', 6),
+    dlc: document.getElementById('r-dlc').value || '',
     hasNC: false, ts: window._serverTS()
   };
   try {
@@ -2728,6 +2753,7 @@ function buildDetailRows(r){
     add('N° BL', r.bl);
     add('Temp. livraison', r.temp ? r.temp+'°C' : '—', parseFloat(r.temp)>4?'nc':'ok');
     add('Points contrôle', r.checks);
+    if(r.dlc) add('DLC / DDM relevée', r.dlc.split('-').reverse().join('/'), r.dlc<=r.date?'nc':'ok');
     if(r.obs) add('Observations', r.obs);
     add('Signé par', r.signe);
   } else if(r.type==='nettoyage'){
@@ -2884,12 +2910,12 @@ function buildPDFContent(recs, titre, periode){
         drawTblRow([r.date,r.heure||r.time,r.friteuse||'—',r.tpm+'%',r.temp?r.temp+'°':'—',(r.couleur||'').substring(0,18),(r.action||'').substring(0,24),r.signe||'—',r.hasNC?'NC':'OK'],cw,M,y,ri,r.hasNC); y+=6;
       });
     } else if(type==='reception'){
-      const h=['Date','Heure','Fournisseur','N° BL','T° liv.','Contrôles','Observations','Signé','Statut'];
-      const cw=[22,14,44,22,14,16,54,22,16];
+      const h=['Date','Heure','Fournisseur','N° BL','T° liv.','Contrôles','DLC','Observations','Signé','Statut'];
+      const cw=[22,14,40,20,14,16,20,40,20,16];
       drawTblHeaders(h,cw,M,y); y+=7;
       group.forEach((r,ri)=>{
         if(y>H-15){doc.addPage();y=22;}
-        drawTblRow([r.date,r.time,(r.fourn||'—').substring(0,22),r.bl||'—',r.temp?r.temp+'°':'—',r.checks||'—',(r.obs||'').substring(0,27),r.signe||'—',r.hasNC?'NC':'OK'],cw,M,y,ri,r.hasNC); y+=6;
+        drawTblRow([r.date,r.time,(r.fourn||'—').substring(0,22),r.bl||'—',r.temp?r.temp+'°':'—',r.checks||'—',r.dlc?r.dlc.split('-').reverse().join('/'):'—',(r.obs||'').substring(0,20),r.signe||'—',r.hasNC?'NC':'OK'],cw,M,y,ri,r.hasNC); y+=6;
       });
     } else if(type==='nettoyage'){
       const h=['Date','Heure','Zone','Type','Produit','Étapes','Signé'];
