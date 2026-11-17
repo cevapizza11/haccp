@@ -302,7 +302,9 @@ body.is-admin .admin-only-flex{display:flex}
 .emp-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
 .emp-item:last-child{border:none}
 .emp-avatar{width:34px;height:34px;border-radius:50%;background:var(--bg);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
-.emp-body{flex:1}
+.emp-body{flex:1;min-width:0}
+.emp-actions{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;max-width:58%}
+.emp-actions .role-toggle{white-space:nowrap}
 .emp-name{font-size:13px;font-weight:600}
 .emp-role{font-size:11px;color:var(--text-2);margin-top:2px}
 .role-toggle{font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:none;cursor:pointer;color:var(--gold)}
@@ -500,7 +502,7 @@ a{color:var(--gold)}
     <div class="topbar-left">
       <div class="topbar-logo">🐚</div>
       <div>
-        <div class="topbar-title">Moule & Smile <span style="font-size:10px;font-weight:400;opacity:.6">v.09/11/2026 12:55</span></div>
+        <div class="topbar-title">Moule & Smile <span style="font-size:10px;font-weight:400;opacity:.6">v.17/11/2026 15:45</span></div>
         <div class="topbar-sub" id="topbar-date">—</div>
       </div>
     </div>
@@ -1024,7 +1026,10 @@ a{color:var(--gold)}
 
       <div class="section-label">Gestion des employés &amp; rôles</div>
       <div class="rapport-card">
-        <div style="font-size:12px;color:var(--text-2);margin-bottom:10px">Le rôle <b>Manager</b> permet de gérer les appareils de froid. Tu restes le seul admin.</div>
+        <div style="font-size:12px;color:var(--text-2);margin-bottom:10px">Le rôle <b>Manager</b> permet de gérer les appareils de froid. Tu restes le seul admin.<br>
+          <b>✅ Valider</b> : donne l'accès à un nouveau compte · <b>Refuser</b> : bloque un compte en attente<br>
+          <b>🚫 Retirer l'accès</b> : bloque la personne mais garde son compte (bouton <b>✅ Rendre l'accès</b> pour la réactiver)<br>
+          <b>🗑️ Supprimer</b> : efface le compte de la liste, définitivement. Les relevés déjà faits restent dans le classeur.</div>
         <div id="emp-list"><div class="empty-state">Chargement...</div></div>
       </div>
 
@@ -1233,6 +1238,7 @@ onAuthStateChanged(auth, async user => {
         // 22/10/2026 : compte pas encore validé par le gérant (les comptes existants n'ont pas ce champ → validés)
         enAttente = snap.data().valide === false && window._userRole !== 'admin';
         refuse = snap.data().refuse === true;
+        if(snap.data().retire === true) refuse = 'retire';   // 17/11/2026 : accès retiré par le gérant
       } else {
         // Compte sans profil : on crée un profil « en attente » que le gérant pourra valider
         window._prenom = '';
@@ -1486,9 +1492,9 @@ function afficherCompteEnAttente(refuse){
   }
   el.style.display = 'flex';
   el.innerHTML = `<div style="max-width:380px;width:100%;text-align:center;background:var(--surface);border-radius:16px;padding:28px 22px;box-shadow:0 4px 20px rgba(0,0,0,.08)">
-    <div style="font-size:46px;margin-bottom:10px">${refuse?'⛔':'⏳'}</div>
-    <div style="font-size:19px;font-weight:700;margin-bottom:8px">${refuse?'Accès refusé':'Compte en attente de validation'}</div>
-    <div style="font-size:14px;color:var(--text-2);line-height:1.5;margin-bottom:18px">${refuse?'Le gérant n\'a pas validé ce compte. Parle-lui si c\'est une erreur.':'Ton compte est bien créé. Le gérant doit maintenant le valider avant que tu puisses utiliser l\'appli HACCP.'}<br><span style="font-size:12px;color:var(--muted)">${window._userEmail||''}</span></div>
+    <div style="font-size:46px;margin-bottom:10px">${refuse==='retire'?'🚫':refuse?'⛔':'⏳'}</div>
+    <div style="font-size:19px;font-weight:700;margin-bottom:8px">${refuse==='retire'?'Accès retiré':refuse?'Accès refusé':'Compte en attente de validation'}</div>
+    <div style="font-size:14px;color:var(--text-2);line-height:1.5;margin-bottom:18px">${refuse==='retire'?'Le gérant a retiré ton accès à l\'appli HACCP. Parle-lui si tu en as besoin.':refuse?'Le gérant n\'a pas validé ce compte. Parle-lui si c\'est une erreur.':'Ton compte est bien créé. Le gérant doit maintenant le valider avant que tu puisses utiliser l\'appli HACCP.'}<br><span style="font-size:12px;color:var(--muted)">${window._userEmail||''}</span></div>
     <button onclick="location.reload()" style="width:100%;padding:12px;border:none;border-radius:10px;background:var(--gold);color:var(--ink);font-weight:600;font-size:15px;cursor:pointer;margin-bottom:8px">🔄 Vérifier à nouveau</button>
     <button onclick="window._signOut(window._auth).then(()=>location.reload())" style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;background:none;font-size:14px;cursor:pointer">Se déconnecter</button>
   </div>`;
@@ -1658,15 +1664,21 @@ async function loadEmpList() {
       const u = d.data();
       const uid = d.id;
       const role = u.role || 'employe';
-      if(u.valide === false && role !== 'admin') return `<div class="emp-item" style="background:${u.refuse?'var(--bg)':'var(--bg)'};border-radius:10px">
+      const nomJs = (u.prenom||u.email||'').replace(/'/g,"\\'");
+      const btnSuppr = `<button class="role-toggle" style="color:var(--red);border-color:var(--red)" onclick="supprimerCompte('${uid}','${nomJs}')">🗑️ Supprimer</button>`;
+      if(u.valide === false && role !== 'admin') {
+        const statut = u.retire ? '🚫 Accès retiré' : u.refuse ? '⛔ Refusé' : '⏳ En attente de validation';
+        const btnValider = `<button class="role-toggle" style="color:var(--green);border-color:var(--green-deep)" onclick="validerCompte('${uid}','${nomJs}')">${u.retire?'✅ Rendre l\'accès':'✅ Valider'}</button>`;
+        const btnRefuser = (u.refuse||u.retire)?'':`<button class="role-toggle" style="color:var(--red);border-color:var(--red)" onclick="refuserCompte('${uid}','${nomJs}')">Refuser</button>`;
+        return `<div class="emp-item" style="background:var(--bg);border-radius:10px">
         <div class="emp-avatar">${(u.prenom||u.email||'?')[0]}</div>
         <div class="emp-body">
           <div class="emp-name">${u.prenom||'—'}</div>
-          <div class="emp-role">${u.refuse?'⛔ Refusé':'⏳ En attente de validation'} · ${u.email||''}</div>
+          <div class="emp-role">${statut} · ${u.email||''}</div>
         </div>
-        <button class="role-toggle" style="color:var(--green);border-color:var(--green-deep)" onclick="validerCompte('${uid}','${(u.prenom||u.email||'').replace(/'/g,"\\'")}')">✅ Valider</button>
-        ${u.refuse?'':`<button class="role-toggle" style="color:var(--red);border-color:var(--red);margin-left:6px" onclick="refuserCompte('${uid}','${(u.prenom||u.email||'').replace(/'/g,"\\'")}')">Refuser</button>`}
+        <div class="emp-actions">${btnValider}${btnRefuser}${(u.refuse||u.retire)?btnSuppr:''}</div>
       </div>`;
+      }
       const isSelf = uid === window._uid;
       const isAdminUser = role === 'admin';
 
@@ -1693,11 +1705,15 @@ async function loadEmpList() {
         <div class="emp-avatar">${(u.prenom||'?')[0]}</div>
         <div class="emp-body">
           <div class="emp-name">${u.prenom||'—'}</div>
-          <div class="emp-role">${role==='manager'?'👔 Manager':'👤 Employé'}</div>
+          <div class="emp-role">${role==='manager'?'👔 Manager':'👤 Employé'}${u.email?' · '+u.email:''}</div>
         </div>
-        <button class="role-toggle" onclick="toggleRole('${uid}','${role}','${u.prenom||''}')">
-          ${role==='manager'?'Rétrograder':'→ Manager'}
-        </button>
+        <div class="emp-actions">
+          <button class="role-toggle" onclick="toggleRole('${uid}','${role}','${u.prenom||''}')">
+            ${role==='manager'?'Rétrograder':'→ Manager'}
+          </button>
+          <button class="role-toggle" style="color:var(--text-2)" onclick="retirerAcces('${uid}','${nomJs}')">🚫 Retirer l'accès</button>
+          ${btnSuppr}
+        </div>
       </div>`;
     }).join('');
   } catch(e) { el.innerHTML='<div class="empty-state">Erreur de chargement</div>'; }
@@ -1720,7 +1736,7 @@ window.toggleRole = toggleRole;
 
 async function validerCompte(uid, nom){
   if(!confirm(`Valider le compte de ${nom} ? Il pourra utiliser l'appli HACCP.`)) return;
-  try { await window._setDoc(window._doc('users', uid), { valide:true, refuse:false }, { merge:true }); showToast(`✓ ${nom} validé`); loadEmpList(); }
+  try { await window._setDoc(window._doc('users', uid), { valide:true, refuse:false, retire:false }, { merge:true }); showToast(`✓ ${nom} validé`); loadEmpList(); }
   catch(e){ showToast('Erreur : ' + e.message); }
 }
 async function refuserCompte(uid, nom){
@@ -1728,8 +1744,27 @@ async function refuserCompte(uid, nom){
   try { await window._setDoc(window._doc('users', uid), { valide:false, refuse:true }, { merge:true }); showToast(`${nom} refusé`); loadEmpList(); }
   catch(e){ showToast('Erreur : ' + e.message); }
 }
+// 17/11/2026 : retirer l'accès (le compte est gardé, on peut le rendre plus tard avec « ✅ Rendre l'accès »)
+async function retirerAcces(uid, nom){
+  if(uid === window._uid){ showToast('Impossible de retirer ton propre accès'); return; }
+  if(!confirm(`Retirer l'accès de ${nom} ?\n\nIl ne pourra plus utiliser l'appli HACCP, mais son compte est gardé : tu pourras lui rendre l'accès quand tu veux.`)) return;
+  try { await window._setDoc(window._doc('users', uid), { valide:false, refuse:false, retire:true }, { merge:true }); showToast(`🚫 Accès retiré à ${nom}`); loadEmpList(); }
+  catch(e){ showToast('Erreur : ' + e.message); }
+}
+// 17/11/2026 : supprimer le compte (la fiche employé est effacée de la liste ; les relevés déjà faits sont gardés pour la traçabilité HACCP)
+async function supprimerCompte(uid, nom){
+  if(uid === window._uid){ showToast('Impossible de supprimer ton propre compte'); return; }
+  if(!confirm(`Supprimer définitivement le compte de ${nom} ?\n\nIl disparaît de la liste des employés. Les relevés qu'il a déjà faits restent dans le classeur HACCP.\n\nCette action ne peut pas être annulée.`)) return;
+  try { await window._deleteDoc(window._doc('users', uid)); showToast(`🗑️ Compte de ${nom} supprimé`); loadEmpList(); }
+  catch(e){
+    if(e.code === 'permission-denied') showToast('Suppression bloquée par les règles Firebase — utilise « Retirer l\'accès » en attendant');
+    else showToast('Erreur : ' + e.message);
+  }
+}
 window.validerCompte = validerCompte;
 window.refuserCompte = refuserCompte;
+window.retirerAcces = retirerAcces;
+window.supprimerCompte = supprimerCompte;
 
 // ── ALERTES RELEVÉS MANQUANTS ───────────────────────────────────────────
 const SESSIONS_HEURES = [
