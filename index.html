@@ -502,7 +502,7 @@ a{color:var(--gold)}
     <div class="topbar-left">
       <div class="topbar-logo">🐚</div>
       <div>
-        <div class="topbar-title">Moule & Smile <span style="font-size:10px;font-weight:400;opacity:.6">v.17/11/2026 15:45</span></div>
+        <div class="topbar-title">Moule & Smile <span style="font-size:10px;font-weight:400;opacity:.6">v.17/11/2026 16:30</span></div>
         <div class="topbar-sub" id="topbar-date">—</div>
       </div>
     </div>
@@ -1013,6 +1013,13 @@ a{color:var(--gold)}
           ⚙️ Ouvrir
         </button>
       </div>
+      <a href="Guide_HACCP_Moule_et_Smile.pdf" target="_blank" rel="noopener" class="rapport-card" style="display:flex;align-items:center;gap:12px;padding:14px;text-decoration:none;color:inherit">
+        <div style="font-size:24px">📘</div>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:600">Guide de l'appli (PDF)</div>
+          <div style="font-size:12px;color:var(--text-2);margin-top:2px">Fonctionnement, réglages, règles et seuils</div>
+        </div>
+      </a>
       <div class="section-label">Alertes relevés manquants</div>
       <div class="rapport-card">
         <div style="font-size:13px;font-weight:600;margin-bottom:10px">Notifications push — Rappels automatiques</div>
@@ -1690,7 +1697,8 @@ async function loadEmpList() {
           <div class="emp-role">Administrateur — vous-même</div>
         </div>
         <span class="status-pill pill-ok" style="font-size:11px">Admin</span>
-      </div>`;
+      </div>
+      <a href="https://console.firebase.google.com/project/haccp-marmite-bleue/authentication/users" target="_blank" rel="noopener" style="display:block;margin:4px 0 8px;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:10px;font-size:12.5px;color:var(--text);text-decoration:none">🔐 <b>Supprimer un identifiant de connexion (Firebase)</b><br><span style="font-size:11.5px;color:var(--text-2)">Ouvre la liste des comptes → ⋮ au bout de la ligne de l'employé → Supprimer le compte. À faire en plus de 🗑️ Supprimer ci-dessous.</span></a>`;
 
       if(isAdminUser) return `<div class="emp-item">
         <div class="emp-avatar">${(u.prenom||'?')[0]}</div>
